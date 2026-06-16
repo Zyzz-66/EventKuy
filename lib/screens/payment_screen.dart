@@ -27,8 +27,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Row(
-          children: [
+        title: Row(
+          children: const [
             Icon(Icons.check_circle, color: Colors.green, size: 28),
             SizedBox(width: 10),
             Text('Pembayaran Sukses'),

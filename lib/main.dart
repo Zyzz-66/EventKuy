@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import 'screens/dashboard_screen.dart';
 
 void main() {
   runApp(const EventApp());
@@ -15,16 +15,20 @@ class EventApp extends StatelessWidget {
       title: 'Event & Seminar Indonesia',
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor:
-            const Color(0xFFF8FAFC), // Abu-abu sangat terang (Slate 50)
+        scaffoldBackgroundColor: const Color(0xFFF8F9FA), // Off-white/abu-abu terang
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
-          primary: Colors.indigo,
-          secondary: Colors.amber,
+          seedColor: const Color(0xFF1565C0), // Deep Blue
+          primary: const Color(0xFF1565C0),
+          secondary: const Color(0xFF1A73E8), // Sky/Bright Blue
+        ),
+        fontFamily: 'Inter', // Default sans-serif, jika belum ada asset font akan otomatis pakai font bawaan yang mirip
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFF8F9FA),
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black87),
         ),
       ),
-      home: const LoginScreen(),
+      home: const DashboardScreen(),
     );
   }
 }

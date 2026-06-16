@@ -98,9 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             Text('Halo, Selamat Datang 👋',
                 style: TextStyle(fontSize: 14, color: Colors.grey)),
             Text('Temukan Event Seru',

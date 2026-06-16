@@ -142,16 +142,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Row(
-          children: [
+        title: Row(
+          children: const [
             Icon(Icons.settings_rounded, color: Colors.indigo),
             SizedBox(width: 10),
             Text('Pengaturan'),
           ],
         ),
-        content: const Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: const [
             ListTile(
               leading: Icon(Icons.notifications_none_rounded),
               title: Text('Notifikasi Aplikasi'),
