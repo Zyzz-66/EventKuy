@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'main_navigation.dart';
 import 'register_screen.dart';
 
@@ -54,7 +55,11 @@ class LoginScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14)),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    // Simpan status login ke SharedPreferences
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('isLoggedIn', true);
+
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

@@ -1,4 +1,4 @@
-name: event_seminar_indonesia
+name: event_kuy
 description: A new Flutter project.
 publish_to: 'none'
 
@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^1.0.2
+  qr_flutter: ^4.0.0
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:

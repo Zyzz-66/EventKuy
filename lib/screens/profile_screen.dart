@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'login_screen.dart';
+import 'change_password_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -14,6 +17,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _dob = '12 Oktober 1998';
   String _email = 'ahmad@email.com';
   String _phone = '081234567890';
+
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+  // Fungsi untuk memilih gambar dari Kamera atau Galeri
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      debugPrint("Gagal memilih gambar: $e");
+    }
+  }
+
+  // Menampilkan Bottom Sheet Pilihan Kamera/Galeri
+  void _showImagePickerOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt_rounded, color: Colors.indigo),
+                title: const Text('Ambil dari Kamera'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library_rounded, color: Colors.indigo),
+                title: const Text('Pilih dari Galeri'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.close_rounded, color: Colors.red),
+                title: const Text('Batal', style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   // Fungsi untuk menampilkan Bottom Sheet Edit Profil
   void _showEditProfileBottomSheet() {
@@ -151,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             ListTile(
               leading: Icon(Icons.notifications_none_rounded),
               title: Text('Notifikasi Aplikasi'),
@@ -161,6 +222,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               leading: Icon(Icons.lock_outline_rounded),
               title: Text('Ubah Password'),
               trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14),
+              onTap: () {
+                Navigator.pop(context); // Tutup dialog
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChangePasswordScreen(),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.language_rounded),
@@ -188,6 +258,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit_note_rounded, color: Colors.indigo),
+            onPressed: _showEditProfileBottomSheet,
+            tooltip: 'Edit Profil Text',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
@@ -204,22 +281,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.indigo, width: 3),
                         ),
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 55,
-                          backgroundColor: Color(0xFFF1F5F9),
-                          child: Icon(Icons.person_rounded,
-                              size: 60, color: Colors.indigo),
+                          backgroundColor: const Color(0xFFF1F5F9),
+                          backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
+                          child: _imageFile == null
+                              ? const Icon(Icons.person_rounded,
+                                  size: 60, color: Colors.indigo)
+                              : null,
                         ),
                       ),
                       Positioned(
                         bottom: 0,
                         right: 4,
                         child: GestureDetector(
-                          onTap: _showEditProfileBottomSheet,
+                          onTap: _showImagePickerOptions,
                           child: const CircleAvatar(
                             radius: 18,
                             backgroundColor: Colors.indigo,
-                            child: Icon(Icons.edit_rounded,
+                            child: Icon(Icons.camera_alt_rounded,
                                 size: 16, color: Colors.white),
                           ),
                         ),

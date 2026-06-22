@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import 'history_screen.dart';
+import 'my_tickets_screen.dart';
 import 'profile_screen.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -15,7 +15,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const HistoryScreen(),
+    const MyTicketsScreen(),
     const ProfileScreen(),
   ];
 
